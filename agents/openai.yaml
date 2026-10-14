@@ -1,0 +1,6 @@
+interface:
+  display_name: "Commerce Atelier"
+  short_description: "依据实物图制作电商主图与连续详情套图，完成整套分镜、生图和逐图复查"
+  default_prompt: "使用 $commerce-atelier，根据商品实物图和已知参数，为指定电商平台制作所需数量的主图与连续详情套图。"
+policy:
+  allow_implicit_invocation: true

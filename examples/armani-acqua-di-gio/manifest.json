@@ -1,0 +1,51 @@
+{
+  "title": "通用电商 · 阿玛尼寄情 EDT",
+  "platform": "general_ecommerce",
+  "heroCount": 2,
+  "detailCount": 4,
+  "scope": "completed_compact_example",
+  "images": [
+    {
+      "file": "images/hero-01.png",
+      "kind": "HERO",
+      "title": "海洋清新",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "file": "images/hero-02.png",
+      "kind": "HERO",
+      "title": "香调层次",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "file": "images/detail-01.png",
+      "kind": "DETAIL",
+      "title": "清新有海意",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "file": "images/detail-02.png",
+      "kind": "DETAIL",
+      "title": "三段香气",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "file": "images/detail-03.png",
+      "kind": "DETAIL",
+      "title": "日常适用场景",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "file": "images/detail-04.png",
+      "kind": "DETAIL",
+      "title": "产品规格",
+      "width": 1086,
+      "height": 1448
+    }
+  ]
+}

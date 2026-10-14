@@ -1,0 +1,7 @@
+{
+  "general_ecommerce": {"label":"通用电商","direction":"Category-specific commercial art direction: distinctive product-led cover, complementary gallery shots and a varied continuous detail story with clear mobile hierarchy."},
+  "taobao_tmall": {"label":"淘宝 / 天猫","direction":"Product detail storytelling: clear hero, feature closeups, usage context and confirmed specifications, consistent vertical rhythm."},
+  "pinduoduo": {"label":"拼多多","direction":"Immediately understandable product benefits, large legible titles, straightforward product presentation. Never invent low prices or promotions."},
+  "xiaohongshu": {"label":"小红书","direction":"Lifestyle editorial imagery, natural use context, concise conversational captions. No fabricated personal experiences or endorsements."},
+  "douyin_ecommerce": {"label":"抖音电商","direction":"Fast comprehension on mobile: strong product focus, short headlines and visual demonstrations supported by known facts."}
+}

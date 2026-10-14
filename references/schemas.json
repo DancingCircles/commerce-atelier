@@ -1,0 +1,1540 @@
+{
+  "input": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "idempotencyKey": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 100
+      },
+      "language": {
+        "default": "zh-CN",
+        "type": "string",
+        "enum": [
+          "zh-CN",
+          "en-US",
+          "ja-JP",
+          "ko-KR",
+          "es-ES",
+          "fr-FR",
+          "de-DE",
+          "pt-PT",
+          "ar-SA",
+          "ru-RU"
+        ]
+      },
+      "quality": {
+        "default": "auto",
+        "type": "string",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "heroCount": {
+        "default": 4,
+        "type": "integer",
+        "minimum": 3,
+        "maximum": 10
+      },
+      "detailCount": {
+        "default": 6,
+        "type": "integer",
+        "minimum": 4,
+        "maximum": 20
+      },
+      "mode": {
+        "default": "create",
+        "type": "string",
+        "enum": [
+          "create",
+          "xhs",
+          "edit",
+          "regenerate",
+          "translate"
+        ]
+      },
+      "sectionId": {
+        "type": "string"
+      },
+      "instruction": {
+        "default": "",
+        "type": "string",
+        "maxLength": 4000
+      }
+    },
+    "required": [
+      "idempotencyKey",
+      "language",
+      "quality",
+      "heroCount",
+      "detailCount",
+      "mode",
+      "instruction"
+    ],
+    "additionalProperties": false
+  },
+  "plan": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "productName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "facts": {
+        "maxItems": 30,
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "version": {
+        "type": "number",
+        "const": 3
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "books",
+          "electronics",
+          "appliances",
+          "food",
+          "apparel",
+          "beauty",
+          "home",
+          "everyday"
+        ]
+      },
+      "audience": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 400
+      },
+      "positioning": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 400
+      },
+      "productInformation": {
+        "type": "object",
+        "properties": {
+          "parameters": {
+            "minItems": 1,
+            "maxItems": 12,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 60
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 180
+                },
+                "factIds": {
+                  "minItems": 1,
+                  "maxItems": 8,
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "label",
+                "value",
+                "factIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sizeChart": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "columns": {
+                    "minItems": 2,
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 60
+                    }
+                  },
+                  "rows": {
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "cells": {
+                          "minItems": 2,
+                          "maxItems": 8,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 60
+                          }
+                        },
+                        "factIds": {
+                          "minItems": 1,
+                          "maxItems": 8,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "cells",
+                        "factIds"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "columns",
+                  "rows"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "parameters",
+          "sizeChart"
+        ],
+        "additionalProperties": false
+      },
+      "sellingPoints": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60
+            },
+            "buyerNeed": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 180
+            },
+            "feature": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 220
+            },
+            "benefit": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 220
+            },
+            "basis": {
+              "type": "string",
+              "enum": [
+                "direct",
+                "inferred"
+              ]
+            },
+            "factIds": {
+              "minItems": 1,
+              "maxItems": 8,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "claimBoundary": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 220
+            }
+          },
+          "required": [
+            "id",
+            "buyerNeed",
+            "feature",
+            "benefit",
+            "basis",
+            "factIds",
+            "claimBoundary"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "evidence": {
+        "minItems": 1,
+        "maxItems": 30,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "claim": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "image",
+                "user"
+              ]
+            },
+            "sourceRef": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "claim",
+            "source",
+            "sourceRef"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "requirements": {
+        "maxItems": 12,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "exact_copy",
+                "information"
+              ]
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "sourceQuote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "text",
+            "sourceQuote"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "sections": {
+        "minItems": 7,
+        "maxItems": 30,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "HERO",
+                "DETAIL"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "positioning",
+                "benefits",
+                "scenario",
+                "detail",
+                "evidence",
+                "specifications",
+                "usage",
+                "contents",
+                "selection",
+                "faq",
+                "brand_story"
+              ]
+            },
+            "contentKind": {
+              "type": "string",
+              "enum": [
+                "general",
+                "on_body",
+                "specifications"
+              ]
+            },
+            "sellingPointIds": {
+              "maxItems": 3,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "buyerQuestion": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 300
+            },
+            "objective": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 300
+            },
+            "factIds": {
+              "minItems": 1,
+              "maxItems": 12,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "role",
+            "contentKind",
+            "sellingPointIds",
+            "buyerQuestion",
+            "objective",
+            "factIds"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "productName",
+      "facts",
+      "version",
+      "category",
+      "audience",
+      "positioning",
+      "productInformation",
+      "sellingPoints",
+      "evidence",
+      "requirements",
+      "sections"
+    ],
+    "additionalProperties": false
+  },
+  "design": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "version": {
+        "type": "number",
+        "const": 3
+      },
+      "layoutVersion": {
+        "type": "number",
+        "const": 1
+      },
+      "viewVersion": {
+        "type": "number",
+        "const": 1
+      },
+      "detailSeams": {
+        "maxItems": 19,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "fromSectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "toSectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            }
+          },
+          "required": [
+            "fromSectionId",
+            "toSectionId",
+            "color"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "recipeId": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "vivid_campaign",
+              "airy_editorial",
+              "cool_graphic",
+              "cobalt_impact",
+              "monochrome_precision",
+              "cocoa_playful",
+              "botanical_glass",
+              "aqua_tactile",
+              "navy_premium",
+              "mineral_editorial",
+              "lifestyle_editorial"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "concept": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 300
+      },
+      "rationale": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 500
+      },
+      "palette": {
+        "minItems": 2,
+        "maxItems": 5,
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        }
+      },
+      "headlineStyle": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 250
+      },
+      "bodyStyle": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 250
+      },
+      "motif": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 300
+      },
+      "lighting": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 300
+      },
+      "sections": {
+        "minItems": 7,
+        "maxItems": 30,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 80
+            },
+            "task": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 300
+            },
+            "composition": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100
+            },
+            "density": {
+              "type": "string",
+              "enum": [
+                "airy",
+                "balanced",
+                "informative"
+              ]
+            },
+            "productScale": {
+              "type": "string",
+              "enum": [
+                "environmental",
+                "dominant",
+                "macro"
+              ]
+            },
+            "subjectPlacement": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 350
+            },
+            "camera": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 300
+            },
+            "viewpoint": {
+              "type": "string",
+              "enum": [
+                "front",
+                "three_quarter",
+                "side",
+                "top_down",
+                "rear",
+                "macro"
+              ]
+            },
+            "background": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 400
+            },
+            "lighting": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 300
+            },
+            "graphicDevice": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 300
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "typography": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "fontCharacter": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 250
+                    },
+                    "layout": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 300
+                    },
+                    "emphasis": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 250
+                    },
+                    "decoration": {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 300
+                    }
+                  },
+                  "required": [
+                    "fontCharacter",
+                    "layout",
+                    "emphasis",
+                    "decoration"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expression": {
+              "type": "string",
+              "enum": [
+                "photo",
+                "annotation",
+                "statement",
+                "information"
+              ]
+            },
+            "expressionReason": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 350
+            },
+            "compositionBrief": {
+              "type": "string",
+              "minLength": 15,
+              "maxLength": 700
+            },
+            "production": {
+              "type": "object",
+              "properties": {
+                "buyerTakeaway": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 250
+                },
+                "narrativeLink": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 250
+                },
+                "visualProof": {
+                  "type": "string",
+                  "minLength": 15,
+                  "maxLength": 400
+                },
+                "layoutBlueprint": {
+                  "type": "string",
+                  "minLength": 30,
+                  "maxLength": 600
+                },
+                "materialTreatment": {
+                  "type": "string",
+                  "minLength": 15,
+                  "maxLength": 350
+                },
+                "interaction": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 300
+                },
+                "copyArchitecture": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 300
+                },
+                "differenceFromPrevious": {
+                  "type": "string",
+                  "minLength": 15,
+                  "maxLength": 350
+                },
+                "supportingModules": {
+                  "maxItems": 3,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 200
+                      },
+                      "visual": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 300
+                      },
+                      "placement": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 250
+                      },
+                      "factIds": {
+                        "maxItems": 12,
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "textBlockIndexes": {
+                        "maxItems": 6,
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 5
+                        }
+                      }
+                    },
+                    "required": [
+                      "purpose",
+                      "visual",
+                      "placement",
+                      "factIds",
+                      "textBlockIndexes"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "buyerTakeaway",
+                "narrativeLink",
+                "visualProof",
+                "layoutBlueprint",
+                "materialTreatment",
+                "interaction",
+                "copyArchitecture",
+                "differenceFromPrevious",
+                "supportingModules"
+              ],
+              "additionalProperties": false
+            },
+            "requirementIds": {
+              "maxItems": 12,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "referenceUses": {
+              "maxItems": 2,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "enum": [
+                      "photography",
+                      "palette",
+                      "layout"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "purpose"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "textBlocks": {
+              "maxItems": 6,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "headline",
+                      "support",
+                      "label"
+                    ]
+                  },
+                  "placement": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 200
+                  },
+                  "size": {
+                    "type": "string",
+                    "enum": [
+                      "display",
+                      "subhead",
+                      "body"
+                    ]
+                  },
+                  "color": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "origin": {
+                    "type": "string",
+                    "enum": [
+                      "ai",
+                      "user_required"
+                    ]
+                  },
+                  "typesetting": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "lines": {
+                            "minItems": 1,
+                            "maxItems": 12,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 500
+                            }
+                          },
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "width": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 100
+                          },
+                          "fontSize": {
+                            "type": "number",
+                            "minimum": 11,
+                            "maximum": 72
+                          },
+                          "weight": {
+                            "type": "string",
+                            "enum": [
+                              "regular",
+                              "medium",
+                              "semibold",
+                              "bold"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 2
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "lines",
+                          "x",
+                          "y",
+                          "width",
+                          "fontSize",
+                          "weight",
+                          "lineHeight",
+                          "align"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "text",
+                  "role",
+                  "placement",
+                  "size",
+                  "color",
+                  "origin"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "continuity": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 350
+            }
+          },
+          "required": [
+            "sectionId",
+            "title",
+            "task",
+            "composition",
+            "density",
+            "productScale",
+            "subjectPlacement",
+            "camera",
+            "viewpoint",
+            "background",
+            "lighting",
+            "graphicDevice",
+            "typography",
+            "expression",
+            "expressionReason",
+            "compositionBrief",
+            "production",
+            "requirementIds",
+            "referenceUses",
+            "textBlocks",
+            "continuity"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "version",
+      "layoutVersion",
+      "viewVersion",
+      "detailSeams",
+      "recipeId",
+      "concept",
+      "rationale",
+      "palette",
+      "headlineStyle",
+      "bodyStyle",
+      "motif",
+      "lighting",
+      "sections"
+    ],
+    "additionalProperties": false
+  },
+  "designReview": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "passed": {
+        "type": "boolean"
+      },
+      "issues": {
+        "maxItems": 10,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sectionIds": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "fact",
+                "design",
+                "copy",
+                "typography"
+              ]
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "sectionIds",
+            "kind",
+            "message"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "changes": {
+        "maxItems": 30,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "object",
+              "properties": {
+                "sectionId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 80
+                },
+                "task": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 300
+                },
+                "composition": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100
+                },
+                "density": {
+                  "type": "string",
+                  "enum": [
+                    "airy",
+                    "balanced",
+                    "informative"
+                  ]
+                },
+                "productScale": {
+                  "type": "string",
+                  "enum": [
+                    "environmental",
+                    "dominant",
+                    "macro"
+                  ]
+                },
+                "subjectPlacement": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 350
+                },
+                "camera": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 300
+                },
+                "viewpoint": {
+                  "type": "string",
+                  "enum": [
+                    "front",
+                    "three_quarter",
+                    "side",
+                    "top_down",
+                    "rear",
+                    "macro"
+                  ]
+                },
+                "background": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 400
+                },
+                "lighting": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 300
+                },
+                "graphicDevice": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 5,
+                      "maxLength": 300
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "typography": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "fontCharacter": {
+                          "type": "string",
+                          "minLength": 5,
+                          "maxLength": 250
+                        },
+                        "layout": {
+                          "type": "string",
+                          "minLength": 5,
+                          "maxLength": 300
+                        },
+                        "emphasis": {
+                          "type": "string",
+                          "minLength": 5,
+                          "maxLength": 250
+                        },
+                        "decoration": {
+                          "type": "string",
+                          "minLength": 5,
+                          "maxLength": 300
+                        }
+                      },
+                      "required": [
+                        "fontCharacter",
+                        "layout",
+                        "emphasis",
+                        "decoration"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "expression": {
+                  "type": "string",
+                  "enum": [
+                    "photo",
+                    "annotation",
+                    "statement",
+                    "information"
+                  ]
+                },
+                "expressionReason": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 350
+                },
+                "compositionBrief": {
+                  "type": "string",
+                  "minLength": 15,
+                  "maxLength": 700
+                },
+                "production": {
+                  "type": "object",
+                  "properties": {
+                    "buyerTakeaway": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 250
+                    },
+                    "narrativeLink": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 250
+                    },
+                    "visualProof": {
+                      "type": "string",
+                      "minLength": 15,
+                      "maxLength": 400
+                    },
+                    "layoutBlueprint": {
+                      "type": "string",
+                      "minLength": 30,
+                      "maxLength": 600
+                    },
+                    "materialTreatment": {
+                      "type": "string",
+                      "minLength": 15,
+                      "maxLength": 350
+                    },
+                    "interaction": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 300
+                    },
+                    "copyArchitecture": {
+                      "type": "string",
+                      "minLength": 10,
+                      "maxLength": 300
+                    },
+                    "differenceFromPrevious": {
+                      "type": "string",
+                      "minLength": 15,
+                      "maxLength": 350
+                    },
+                    "supportingModules": {
+                      "maxItems": 3,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "purpose": {
+                            "type": "string",
+                            "minLength": 5,
+                            "maxLength": 200
+                          },
+                          "visual": {
+                            "type": "string",
+                            "minLength": 10,
+                            "maxLength": 300
+                          },
+                          "placement": {
+                            "type": "string",
+                            "minLength": 10,
+                            "maxLength": 250
+                          },
+                          "factIds": {
+                            "maxItems": 12,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "textBlockIndexes": {
+                            "maxItems": 6,
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 5
+                            }
+                          }
+                        },
+                        "required": [
+                          "purpose",
+                          "visual",
+                          "placement",
+                          "factIds",
+                          "textBlockIndexes"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "buyerTakeaway",
+                    "narrativeLink",
+                    "visualProof",
+                    "layoutBlueprint",
+                    "materialTreatment",
+                    "interaction",
+                    "copyArchitecture",
+                    "differenceFromPrevious",
+                    "supportingModules"
+                  ],
+                  "additionalProperties": false
+                },
+                "requirementIds": {
+                  "maxItems": 12,
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "referenceUses": {
+                  "maxItems": 2,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "enum": [
+                          "photography",
+                          "palette",
+                          "layout"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "purpose"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "textBlocks": {
+                  "maxItems": 6,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "role": {
+                        "type": "string",
+                        "enum": [
+                          "headline",
+                          "support",
+                          "label"
+                        ]
+                      },
+                      "placement": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 200
+                      },
+                      "size": {
+                        "type": "string",
+                        "enum": [
+                          "display",
+                          "subhead",
+                          "body"
+                        ]
+                      },
+                      "color": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
+                      },
+                      "origin": {
+                        "type": "string",
+                        "enum": [
+                          "ai",
+                          "user_required"
+                        ]
+                      },
+                      "typesetting": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "lines": {
+                                "minItems": 1,
+                                "maxItems": 12,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 500
+                                }
+                              },
+                              "x": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              },
+                              "y": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              },
+                              "width": {
+                                "type": "number",
+                                "minimum": 1,
+                                "maximum": 100
+                              },
+                              "fontSize": {
+                                "type": "number",
+                                "minimum": 11,
+                                "maximum": 72
+                              },
+                              "weight": {
+                                "type": "string",
+                                "enum": [
+                                  "regular",
+                                  "medium",
+                                  "semibold",
+                                  "bold"
+                                ]
+                              },
+                              "lineHeight": {
+                                "type": "number",
+                                "minimum": 1,
+                                "maximum": 2
+                              },
+                              "align": {
+                                "type": "string",
+                                "enum": [
+                                  "left",
+                                  "center",
+                                  "right"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "lines",
+                              "x",
+                              "y",
+                              "width",
+                              "fontSize",
+                              "weight",
+                              "lineHeight",
+                              "align"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "role",
+                      "placement",
+                      "size",
+                      "color",
+                      "origin"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "continuity": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 350
+                }
+              },
+              "required": [
+                "sectionId",
+                "title",
+                "task",
+                "composition",
+                "density",
+                "productScale",
+                "subjectPlacement",
+                "camera",
+                "viewpoint",
+                "background",
+                "lighting",
+                "graphicDevice",
+                "typography",
+                "expression",
+                "expressionReason",
+                "compositionBrief",
+                "production",
+                "requirementIds",
+                "referenceUses",
+                "textBlocks",
+                "continuity"
+              ],
+              "additionalProperties": false
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 500
+            },
+            "factIds": {
+              "maxItems": 12,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "section",
+            "reason",
+            "factIds"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "passed",
+      "issues",
+      "changes"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,10 @@
+# Local workflow state and private source material
+work/
+outputs/
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.env
+.env.*
